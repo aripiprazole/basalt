@@ -8,39 +8,43 @@ plugins {
   application
 }
 
-group = "me.gabrielleeg1"
-version = "0.0.1"
-
-ktlint {
-  version.set("0.45.2")
-  android.set(false)
-  additionalEditorconfigFile.set(rootProject.file(".editorconfig"))
-}
-
-detekt {
-  buildUponDefaultConfig = true
-  allRules = false
-
-  config = files("${rootProject.projectDir}/config/detekt.yml")
-  baseline = file("${rootProject.projectDir}/config/baseline.xml")
-}
-
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-  testImplementation(kotlin("test"))
-}
-
-tasks.test {
-  useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "1.8"
-}
-
 application {
   mainClass.set("MainKt")
+}
+
+allprojects {
+  apply(plugin = "org.jetbrains.kotlin.jvm")
+  apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
+  apply(plugin = "org.jlleitschuh.gradle.ktlint")
+  apply(plugin = "io.gitlab.arturbosch.detekt")
+
+  ktlint {
+    version.set("0.45.2")
+    android.set(false)
+    additionalEditorconfigFile.set(rootProject.file(".editorconfig"))
+  }
+
+  detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+
+    config = files("${rootProject.projectDir}/config/detekt.yml")
+    baseline = file("${rootProject.projectDir}/config/baseline.xml")
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    testImplementation(kotlin("test"))
+  }
+
+  tasks.test {
+    useJUnitPlatform()
+  }
+
+  tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+  }
 }
