@@ -70,8 +70,9 @@ class BasaltCommand : CliktCommand() {
       }
     }
 
-    val worldRegistry = config.worlds.associate { (name, codec) ->
+    val worldRegistry = config.worlds.associate { (name) ->
       val folder = target.resolve(name).takeIf { it.exists() }
+        ?: target.resolve("worlds/$name").takeIf { it.exists() }
         ?: throw BasaltException("World $name does not exist")
 
       name to readAnvilWorld(minecraftBlockRegistry, folder)
