@@ -1,4 +1,4 @@
-package basalt.script.host
+package basalt.cli.host
 
 import andesite.java.server.createJavaServer
 import andesite.protocol.java.v756.v756

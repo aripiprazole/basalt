@@ -1,4 +1,4 @@
-package basalt.script.definition
+package basalt.extension.definition
 
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptCollectedData

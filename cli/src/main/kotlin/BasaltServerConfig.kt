@@ -1,4 +1,4 @@
-package basalt.script.host
+package basalt.cli.host
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

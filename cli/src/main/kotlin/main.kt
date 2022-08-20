@@ -1,4 +1,4 @@
-package basalt.script.host
+package basalt.cli.host
 
 import kotlin.system.exitProcess
 
