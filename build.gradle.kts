@@ -38,6 +38,8 @@ allprojects {
   }
 
   dependencies {
+    implementation("me.gabrielleeg1:andesite-server-java:1.0.5-SNAPSHOT")
+
     testImplementation(kotlin("test"))
   }
 
