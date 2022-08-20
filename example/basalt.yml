@@ -1,0 +1,17 @@
+host: 127.0.0.1
+port: 25565
+
+motd:
+  max-players: 20
+  version: Andesite for 1.17.1
+  text: \&7A Minecraft Server
+
+worlds:
+  - name: main
+    codec: anvil
+
+spawn:
+  x: 0
+  y: 0
+  z: 0
+  world: main
