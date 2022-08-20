@@ -12,7 +12,7 @@ import andesite.world.anvil.readAnvilWorld
 import andesite.world.block.BlockRegistry
 import andesite.world.block.readBlockRegistry
 import basalt.extension.host.BasaltExtensionEngine
-import basalt.server.BasaltServer
+import basalt.server.BasaltServerImpl
 import com.charleskorn.kaml.Yaml
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
@@ -52,8 +52,6 @@ class BasaltCommand : CliktCommand() {
   }
 
   private fun createServerByConfig(config: BasaltServerConfig): MinecraftServer {
-    val extensionEngine = BasaltExtensionEngine()
-
     val minecraftServer = createJavaServer(coroutineContext) {
       hostname = "127.0.0.1"
       port = 25565
@@ -77,10 +75,9 @@ class BasaltCommand : CliktCommand() {
       }
     }
 
-    val basaltServer = BasaltServer(extensionEngine, target, minecraftServer)
-      .also { basaltServer ->
-        extensionEngine.server = basaltServer
-      }
+    val basaltServer = BasaltServerImpl(target, minecraftServer).apply {
+      extensionEngine = BasaltExtensionEngine(this)
+    }
 
     return basaltServer
   }

@@ -9,19 +9,12 @@ interface BasaltServer : MinecraftServer {
   val workingDirectory: File
 }
 
-fun BasaltServer(
-  extensionEngine: ExtensionEngine,
-  workingDirectory: File,
-  minecraftServer: MinecraftServer,
-): BasaltServer {
-  return BasaltServerImpl(extensionEngine, workingDirectory, minecraftServer)
-}
-
-private class BasaltServerImpl(
-  override val extensionEngine: ExtensionEngine,
+class BasaltServerImpl(
   override val workingDirectory: File,
   private val minecraftServer: MinecraftServer,
 ) : BasaltServer, MinecraftServer by minecraftServer {
+  override lateinit var extensionEngine: ExtensionEngine
+
   override fun toString(): String {
     return "BasaltServer(minecraftServer=$minecraftServer)"
   }
