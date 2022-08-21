@@ -2,8 +2,8 @@ package basalt.extension
 
 import andesite.event.MinecraftEvent
 
-class ExtensionLoadEvent : MinecraftEvent
+data class ExtensionLoadEvent(val extension: Extension) : MinecraftEvent
 
-class ExtensionEnableEvent : MinecraftEvent
+data class ExtensionEnableEvent(val extension: Extension) : MinecraftEvent
 
-class ExtensionDisableEvent : MinecraftEvent
+data class ExtensionDisableEvent(val extension: Extension) : MinecraftEvent

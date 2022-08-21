@@ -12,6 +12,7 @@ import andesite.world.anvil.readAnvilWorld
 import andesite.world.block.BlockRegistry
 import andesite.world.block.readBlockRegistry
 import basalt.extension.host.BasaltExtensionEngine
+import basalt.server.BasaltException
 import basalt.server.BasaltServerImpl
 import com.charleskorn.kaml.Yaml
 import com.github.ajalt.clikt.core.CliktCommand

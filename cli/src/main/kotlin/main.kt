@@ -1,5 +1,6 @@
 package basalt.cli.host
 
+import basalt.server.BasaltException
 import kotlin.system.exitProcess
 
 fun main(vararg args: String) {
