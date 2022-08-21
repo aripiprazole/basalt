@@ -5,7 +5,6 @@ import andesite.protocol.java.v756.v756
 import andesite.protocol.misc.Chat
 import andesite.protocol.misc.UuidSerializer
 import andesite.protocol.serialization.MinecraftCodec
-import andesite.server.MinecraftServer
 import andesite.world.Location
 import andesite.world.World
 import andesite.world.anvil.readAnvilWorld
@@ -13,6 +12,7 @@ import andesite.world.block.BlockRegistry
 import andesite.world.block.readBlockRegistry
 import basalt.extension.host.BasaltExtensionEngine
 import basalt.server.BasaltException
+import basalt.server.BasaltServer
 import basalt.server.BasaltServerImpl
 import com.charleskorn.kaml.Yaml
 import com.github.ajalt.clikt.core.CliktCommand
@@ -23,6 +23,7 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -43,19 +44,21 @@ class BasaltCommand : CliktCommand() {
     .file(mustExist = true, canBeFile = false, mustBeReadable = true)
     .defaultLazy { File(".") }
 
-  override fun run() {
+  override fun run(): Unit = runBlocking(CoroutineName("basalt/cli")) {
     logger.info("Basalt is starting up at folder: $target")
 
     val config = decodeBasaltConfig()
     val server = createServerByConfig(config)
 
+    server.extensionEngine.loadInitialExtensions()
+
     server.listen()
   }
 
-  private fun createServerByConfig(config: BasaltServerConfig): MinecraftServer {
+  private fun createServerByConfig(config: BasaltServerConfig): BasaltServer {
     val minecraftServer = createJavaServer(coroutineContext) {
-      hostname = "127.0.0.1"
-      port = 25565
+      hostname = config.host
+      port = config.port
 
       blockRegistry = createBlockRegistry()
       codec = createMinecraftCodec()

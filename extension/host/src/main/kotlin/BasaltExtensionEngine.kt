@@ -17,7 +17,13 @@ import kotlin.script.experimental.jvmhost.createJvmCompilationConfigurationFromT
 class BasaltExtensionEngine(private val server: BasaltServer) : ExtensionEngine {
   override val loadedExtensions: HashSet<Extension> = HashSet()
 
-  override fun loadExtension(name: String): Extension {
+  override suspend fun loadInitialExtensions() {
+    server.extensionsDirectory.listFiles().orEmpty().forEach { file ->
+      loadExtension(file.name)
+    }
+  }
+
+  override suspend fun loadExtension(name: String): Extension {
     val entrypoint = server.extensionsDirectory.resolve(name).takeIf { it.isFile }
       ?: throw BasaltException("Extension $name not found")
 
