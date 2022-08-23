@@ -22,4 +22,4 @@ import kotlin.script.experimental.annotations.KotlinScript
   fileExtension = "basalt.kts",
   compilationConfiguration = BasaltScriptConfiguration::class,
 )
-abstract class BasaltScript
+open class BasaltScript
